@@ -1,0 +1,16 @@
+@import "./GeneralStyles/variables";
+
+*, *::after, *::before {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+html, body, #app {
+    @include SquareSize(100%);
+}
+
+#app {
+    @include FlexCenter;
+    flex-direction: column;
+}

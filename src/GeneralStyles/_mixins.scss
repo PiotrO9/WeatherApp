@@ -1,0 +1,10 @@
+@mixin SquareSize($value) {
+    width: $value;
+    height: $value;
+}
+
+@mixin FlexCenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
