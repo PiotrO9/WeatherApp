@@ -1,7 +1,7 @@
 <template>
     <main class="form-signin w-100 m-auto">
         <transition name="fade" appear>
-            <form class="form-signin">
+            <form class="form-signin" @submit.prevent="submitForm">
                 <div class="text-center mb-4">
                     <h1 class="h1 mb-3 text-md font-weight-normal">Logowanie</h1>
                 </div>
@@ -15,7 +15,7 @@
                 </div>
                 <div class="checkbox mb-3">
                     <label>
-                        <input type="checkbox" value="remember-me"> Zapamiętaj mnie
+                        <input type="checkbox" v-model="isRemembered" value="remember-me"> Zapamiętaj mnie
                     </label>
                 </div>
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Zaloguj się</button>
@@ -25,10 +25,26 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
+    setup() {
+        const isRemembered = ref(false);
 
+        const submitForm = () => {
+            localStorage.setItem("isRemembered", String(isRemembered.value));
+            const storedValue = localStorage.getItem("isRemembered");
+
+            if (storedValue !== null) {
+                console.log(JSON.parse(storedValue));
+            }
+        };
+
+        return {
+            isRemembered,
+            submitForm
+        }
+    }
 })
 </script>
 
