@@ -1,6 +1,6 @@
 <template>
-    <transition>
-        <main class="form-signin w-100 m-auto">
+    <main class="form-signin w-100 m-auto">
+        <transition name="fade" appear>
             <form class="form-signin">
                 <div class="text-center mb-4">
                     <h1 class="h1 mb-3 text-md font-weight-normal">Logowanie</h1>
@@ -20,8 +20,8 @@
                 </div>
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Zaloguj się</button>
             </form>
-        </main>
-    </transition>
+        </transition>
+    </main>
 </template>
 
 <script lang="ts">
@@ -42,6 +42,10 @@ main {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+
+    .fade-enter-to {
+        animation: fadeIn 2s forwards;
+    }
 
     form {
         width: 15%;
@@ -107,6 +111,18 @@ main {
                 border-radius: 4px;
             }
         }
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-20vh);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 </style>
