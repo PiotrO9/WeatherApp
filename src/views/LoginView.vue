@@ -6,12 +6,15 @@
                     <h1 class="h1 mb-3 text-md font-weight-normal">Logowanie</h1>
                 </div>
                 <div class="form-label-group">
-                    <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                    <input type="email" id="inputEmail" class="form-control" placeholder="Email address"
+                        v-model="emailInput" required autofocus>
                     <label for="inputEmail">Email</label>
                 </div>
                 <div class="form-label-group">
-                    <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                    <input type="password" id="inputPassword" class="form-control" placeholder="Password"
+                        v-model="passwordInput" required>
                     <label for="inputPassword">Hasło</label>
+                    <span v-if="isLoginError" class="text-danger font-weight-bold ml-1">Błędne dane</span>
                 </div>
                 <div class="checkbox mb-3">
                     <label>
@@ -25,24 +28,52 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router';
+import jsonData from '../assets/user.login.datas.json'
+import UserLoginDatas from '../types/UserLoginDatas'
 
 export default defineComponent({
     setup() {
         const isRemembered = ref(false);
+        const isLoginError = ref(false);
+        const emailInput = ref("");
+        const passwordInput = ref("");
+        const registeredUsers = ref<UserLoginDatas[]>([]);
+        const router = useRouter();
 
-        const submitForm = () => {
+        onMounted(() => {
+            registeredUsers.value = jsonData
+        })
+
+        const submitForm = (): void => {
             localStorage.setItem("isRemembered", String(isRemembered.value));
-            const storedValue = localStorage.getItem("isRemembered");
 
-            if (storedValue !== null) {
-                console.log(JSON.parse(storedValue));
+            if (validateUser()) {
+                router.push({ name: "weather" });
+            }
+            else {
+                isLoginError.value = true;
             }
         };
 
+        const validateUser = (): boolean => {
+            registeredUsers.value.forEach((userData: UserLoginDatas) => {
+                if (userData.email === emailInput.value && userData.password === passwordInput.value) {
+                    return true;
+                }
+            })
+
+            return false
+        }
+
         return {
             isRemembered,
-            submitForm
+            isLoginError,
+            emailInput,
+            passwordInput,
+            submitForm,
+            validateUser
         }
     }
 })
