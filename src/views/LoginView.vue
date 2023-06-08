@@ -58,11 +58,11 @@ export default defineComponent({
         };
 
         const validateUser = (): boolean => {
-            registeredUsers.value.forEach((userData: UserLoginDatas) => {
+            for (const userData of registeredUsers.value) {
                 if (userData.email === emailInput.value && userData.password === passwordInput.value) {
                     return true;
                 }
-            })
+            }
 
             return false
         }
