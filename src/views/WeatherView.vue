@@ -1,9 +1,10 @@
 <template>
     <main>
         <nav>
-            <input type="text" class="form-control" v-model="searchInput" placeholder="Wybierz miasto"
-                @input="inputChange" />
-            <select v-if="citiesToSelect.length > 0" class="form-control" id="exampleFormControlSelect1">
+            <input type="text" class="form-control" v-model="searchInput" placeholder="Wyszukaj miasto" />
+            <select v-if="citiesToSelect.length > 0" class="form-control" id="exampleFormControlSelect1"
+                v-model="selectedCity" @change="handleCitySelection">
+                <option disabled selected value="">Wybierz miasto</option>
                 <option v-for="(city, index) in citiesToSelect" :key="index">
                     {{ city }}
                 </option>
@@ -16,9 +17,9 @@
                     <span>test</span>
                 </div>
                 <div v-else>
-                    <!-- <span v-for="(city, index) in citiesToSelect" :key="index">
+                    <span v-for="(city, index) in selectedCities" :key="index">
                         {{ city }}
-                    </span> -->
+                    </span>
                 </div>
             </div>
         </div>
@@ -32,7 +33,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted } from 'vue'
+import { defineComponent, ref, onMounted, computed } from 'vue'
 import jsonData from '../assets/current.city.list.json'
 import type CityDatas from '../types/CityDatas'
 
@@ -40,8 +41,9 @@ export default defineComponent({
     setup() {
         const cityDatas = ref<CityDatas[]>([])
         const citiesToSelectOriginal = ref<string[]>([])
-        const citiesToSelect = ref<string[]>([])
         const searchInput = ref("")
+        const selectedCity = ref("")
+        const selectedCities = ref<string[]>([])
 
         onMounted(() => {
             cityDatas.value = jsonData
@@ -50,24 +52,33 @@ export default defineComponent({
             })
         })
 
-        const inputChange = () => {
-            const serachTerm = searchInput.value.toLowerCase()
+        const handleCitySelection = () => {
+            if (selectedCity.value) {
+                selectedCities.value.push(selectedCity.value);
+                selectedCity.value = '';
+            }
 
-            if (serachTerm.length != 0) {
-                citiesToSelect.value = citiesToSelectOriginal.value.filter(city => {
+            console.log(selectedCities.value)
+        };
+
+        const citiesToSelect = computed(() => {
+            const searchTerm = searchInput.value.toLowerCase();
+            if (searchTerm.length === 0) {
+                return [];
+            } else {
+                return citiesToSelectOriginal.value.filter(city => {
                     const cityString = city.toLowerCase().slice(4);
-                    return cityString.startsWith(serachTerm);
+                    return cityString.startsWith(searchTerm);
                 });
             }
-            else {
-                citiesToSelect.value = [];
-            }
-        }
+        });
 
         return {
             citiesToSelect,
             searchInput,
-            inputChange
+            handleCitySelection,
+            selectedCity,
+            selectedCities
         }
     }
 })
@@ -84,7 +95,15 @@ main {
 
     nav {
         width: 65%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         margin-top: 2rem;
+
+        select {
+            width: 80%;
+            margin-top: 0.5em;
+        }
     }
 
     .CitiesList {
