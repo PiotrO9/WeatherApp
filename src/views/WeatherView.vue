@@ -1,7 +1,10 @@
 <template>
     <main>
         <nav>
-            <input type="text" class="form-control" v-model="searchInput" placeholder="Wyszukaj miasto" />
+            <div>
+                <input type="text" class="form-control" v-model="searchInput" placeholder="Wyszukaj miasto" />
+                <button type="button" class="btn btn-info" @click="logout">Wyloguj</button>
+            </div>
             <select v-if="citiesToSelect.length > 0" class="form-control" id="exampleFormControlSelect1"
                 v-model="selectedCity" @change="handleCitySelection">
                 <option disabled selected value="">Wybierz miasto</option>
@@ -17,10 +20,7 @@
                     <span>Nie wybrano miast</span>
                 </div>
                 <div v-else>
-                    <!-- <span v-for="(city, index) in selectedCities" :key="index">
-                        {{ city }}
-                    </span> -->
-                    <CitiesList :selectedCities="selectedCities" />
+                    <CitiesList :selectedCities="selectedCitiesFullData" />
                 </div>
             </div>
         </div>
@@ -38,6 +38,7 @@ import { defineComponent, ref, onMounted, computed } from 'vue'
 import jsonData from '../assets/current.city.list.json'
 import type CityDatas from '../types/CityDatas'
 import CitiesList from '../components/CitiesList.vue'
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
     components: {
@@ -49,6 +50,8 @@ export default defineComponent({
         const searchInput = ref("")
         const selectedCity = ref("")
         const selectedCities = ref<string[]>([])
+        const selectedCitiesFullData = ref<CityDatas[]>([])
+        const router = useRouter();
 
         onMounted(() => {
             cityDatas.value = jsonData
@@ -60,7 +63,18 @@ export default defineComponent({
         const handleCitySelection = () => {
             if (selectedCity.value) {
                 selectedCities.value.push(selectedCity.value);
+                const trimmedCityName = selectedCity.value.slice(4);
                 selectedCity.value = '';
+
+                const selectedCityFullData: CityDatas | undefined = cityDatas.value.find((city: CityDatas) => {
+                    if (city.name === trimmedCityName) {
+                        return city
+                    }
+                })
+
+                if (selectedCityFullData != undefined) {
+                    selectedCitiesFullData.value.push(selectedCityFullData)
+                }
             }
 
             console.log(selectedCities.value)
@@ -71,19 +85,25 @@ export default defineComponent({
             if (searchTerm.length === 0) {
                 return [];
             } else {
-                return citiesToSelectOriginal.value.filter(city => {
+                return citiesToSelectOriginal.value.filter((city: string) => {
                     const cityString = city.toLowerCase().slice(4);
                     return cityString.startsWith(searchTerm);
                 });
             }
         });
 
+        const logout = (): void => {
+            router.push({ name: "home" });
+        }
+
         return {
             citiesToSelect,
             searchInput,
             handleCitySelection,
             selectedCity,
-            selectedCities
+            selectedCities,
+            selectedCitiesFullData,
+            logout
         }
     }
 })
@@ -105,8 +125,24 @@ main {
         align-items: center;
         margin-top: 2rem;
 
+        div {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            gap: 2%;
+
+            input {
+                width: 80%
+            }
+
+            button {
+                width: 18%;
+            }
+
+        }
+
         select {
-            width: 80%;
+            width: 100%;
             margin-top: 0.5em;
         }
     }
@@ -120,10 +156,15 @@ main {
         }
 
         &__selected {
-            height: 300px;
+            height: max-content;
+            min-height: 300px;
             margin-top: 2rem;
             background-color: $CremeBackgroundColor;
             border-radius: 1rem;
+
+            div {
+                height: 100%;
+            }
         }
     }
 }
