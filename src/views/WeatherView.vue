@@ -13,13 +13,14 @@
         <div class="CitiesList">
             <h1>Wybrane miasta</h1>
             <div class="CitiesList__selected">
-                <div v-if="citiesToSelect == null">
-                    <span>test</span>
+                <div v-if="selectedCities.length == 0">
+                    <span>Nie wybrano miast</span>
                 </div>
                 <div v-else>
-                    <span v-for="(city, index) in selectedCities" :key="index">
+                    <!-- <span v-for="(city, index) in selectedCities" :key="index">
                         {{ city }}
-                    </span>
+                    </span> -->
+                    <CitiesList :selectedCities="selectedCities" />
                 </div>
             </div>
         </div>
@@ -36,8 +37,12 @@
 import { defineComponent, ref, onMounted, computed } from 'vue'
 import jsonData from '../assets/current.city.list.json'
 import type CityDatas from '../types/CityDatas'
+import CitiesList from '../components/CitiesList.vue'
 
 export default defineComponent({
+    components: {
+        CitiesList
+    },
     setup() {
         const cityDatas = ref<CityDatas[]>([])
         const citiesToSelectOriginal = ref<string[]>([])
