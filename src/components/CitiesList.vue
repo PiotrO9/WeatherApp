@@ -46,7 +46,7 @@ div {
     span {
         font-size: 1.2rem;
         font-weight: bold;
-        margin-top: auto;
+        margin-top: 1rem;
         margin-bottom: auto;
 
         &:last-child {

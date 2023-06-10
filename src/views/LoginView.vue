@@ -32,6 +32,7 @@ import { defineComponent, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router';
 import jsonData from '../assets/user.login.datas.json'
 import UserLoginDatas from '../types/UserLoginDatas'
+import { useLogin } from '../stores/loging'
 
 export default defineComponent({
     setup() {
@@ -41,15 +42,18 @@ export default defineComponent({
         const passwordInput = ref("");
         const registeredUsers = ref<UserLoginDatas[]>([]);
         const router = useRouter();
+        const loginStore = useLogin();
 
         onMounted(() => {
             registeredUsers.value = jsonData
         })
 
         const submitForm = (): void => {
-            localStorage.setItem("isRemembered", String(isRemembered.value));
-
             if (validateUser()) {
+                if (isRemembered.value) {
+                    loginStore.rememberUser();
+                }
+                loginStore.LoginUser();
                 router.push({ name: "weather" });
             }
             else {

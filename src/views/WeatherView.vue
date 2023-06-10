@@ -16,10 +16,10 @@
         <div class="CitiesList">
             <h1>Wybrane miasta</h1>
             <div class="CitiesList__selected">
-                <div v-if="selectedCities.length == 0">
+                <div v-if="selectedCitiesStore.$state.SelectedCities.length == 0" class="CitiesList__selected--empty">
                     <span>Nie wybrano miast</span>
                 </div>
-                <div v-else>
+                <div v-else class="CitiesList__selected--list">
                     <CitiesList :selectedCities="selectedCitiesStore.$state.SelectedCities" />
                 </div>
             </div>
@@ -37,6 +37,7 @@ import type CityDatas from '../types/CityDatas'
 import CitiesList from '../components/CitiesList.vue'
 import { useRouter } from 'vue-router';
 import { useSelectedCities } from '../stores/selectedCities'
+import { useLogin } from '../stores/loging'
 
 export default defineComponent({
     components: {
@@ -50,13 +51,20 @@ export default defineComponent({
         const selectedCity = ref("")
         const selectedCities = ref<string[]>([])
         const selectedCitiesFullData = ref<CityDatas[]>([])
-        const selectedCitiesStore = useSelectedCities();
+        const selectedCitiesStore = useSelectedCities()
+        const loginStore = useLogin()
 
         onMounted(() => {
             cityDatas.value = jsonData
             citiesToSelectOriginal.value = cityDatas.value.map((city: CityDatas) => {
                 return city.country + ", " + city.name;
             })
+
+            if (!loginStore.isLogged) {
+                if (!loginStore.isRembered) {
+                    router.push({ name: "home" })
+                }
+            }
         })
 
         const handleCitySelection = () => {
@@ -92,6 +100,7 @@ export default defineComponent({
         });
 
         const logout = (): void => {
+            loginStore.logoutUser()
             router.push({ name: "home" });
         }
 
@@ -162,8 +171,12 @@ main {
             background-color: $CremeBackgroundColor;
             border-radius: 1rem;
 
-            div {
+            &--empty {
                 height: 100%;
+
+                span {
+                    font-size: 1.4rem;
+                }
             }
         }
     }
