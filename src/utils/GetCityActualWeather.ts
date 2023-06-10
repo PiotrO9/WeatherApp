@@ -17,6 +17,7 @@ abstract class GetCityActualWeather {
       maxTemperature: Math.round(fullAPIData.main.temp_max),
       humidity: fullAPIData.main.humidity,
       timezone: fullAPIData.timezone,
+      imageName: fullAPIData.weather[0].icon,
     };
 
     return result;

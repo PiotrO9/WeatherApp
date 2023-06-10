@@ -6,6 +6,7 @@ export type WeatherShortData = {
   maxTemperature: number;
   humidity: number;
   timezone: number;
+  imageName: string;
 };
 
 export default WeatherShortData;

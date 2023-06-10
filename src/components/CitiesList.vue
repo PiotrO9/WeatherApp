@@ -1,4 +1,12 @@
 <template>
+    <div class="legend">
+        <span>Państwo</span>
+        <span>Miasto</span>
+        <span>Obecna pogoda</span>
+        <span>Temperatura</span>
+        <span>Min/Max temperatura</span>
+    </div>
+    <hr>
     <ul>
         <CityListItem v-for="(city, index) in selectedCities" :key="index" :cityData="city" />
     </ul>
@@ -29,6 +37,22 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
+div {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr 1fr 2fr;
+
+    span {
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+}
+
+hr {
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 ul {
     height: 100%;
     display: flex;
