@@ -1,10 +1,7 @@
 <template>
     <li>
         <p>
-            {{ cityData.country }},
-        </p>
-        <p>
-            {{ cityData.name }}
+            {{ cityData.country + ", " + cityData.name }}
         </p>
         <img v-if="weatherIconUrl" :src="weatherIconUrl" alt="Icon with current weather">
         <span v-else>
@@ -14,9 +11,14 @@
             {{ currentWeatherDatas?.temperature }} °C
         </p>
         <p>
+            {{ currentWeatherDatas?.humidity }} %
+        </p>
+        <p>
             {{ currentWeatherDatas?.minTemperature }} °C -
             {{ currentWeatherDatas?.maxTemperature }} °C
         </p>
+        <button type="button" class="btn btn-outline-danger">X</button>
+        <button type="button" class="btn btn-success btn-more">Więcej</button>
     </li>
 </template>
 
@@ -60,9 +62,30 @@ export default defineComponent({
 li {
     width: 100%;
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr 1fr 2fr;
+    grid-template-columns: 4fr repeat(4, 3fr) repeat(2, 2fr);
     justify-items: center;
     align-items: center;
     font-size: 2rem;
+    margin-top: auto;
+    margin-bottom: auto;
+
+    p {
+        font-size: 1.6rem;
+    }
+
+    button {
+        width: 40%;
+        min-width: 48px;
+        text-align: center;
+
+        &.btn-outline-danger {
+            font-weight: bold;
+        }
+
+        &.btn-more {
+            width: 70%;
+            text-align: center;
+        }
+    }
 }
 </style>

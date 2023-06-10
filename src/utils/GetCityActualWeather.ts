@@ -10,6 +10,7 @@ abstract class GetCityActualWeather {
     const fullAPIData: WeatherFullAPIData = await apiResponse.json();
 
     const result: WeatherShortData = {
+      name: fullAPIData.name,
       weather: fullAPIData.weather[0].main,
       description: fullAPIData.weather[0].description,
       temperature: Math.round(fullAPIData.main.temp),

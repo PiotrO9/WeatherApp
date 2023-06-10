@@ -1,10 +1,12 @@
 <template>
     <div class="legend">
-        <span>Państwo</span>
         <span>Miasto</span>
         <span>Obecna pogoda</span>
         <span>Temperatura</span>
+        <span>Wilgotność</span>
         <span>Min/Max temperatura</span>
+        <span>Usuń</span>
+        <span>Więcej informacji</span>
     </div>
     <hr>
     <ul>
@@ -39,11 +41,17 @@ export default defineComponent({
 <style scoped lang="scss">
 div {
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr 1fr 2fr;
+    grid-template-columns: 4fr repeat(4, 3fr) repeat(2, 2fr);
 
     span {
         font-size: 1.2rem;
         font-weight: bold;
+        margin-top: auto;
+        margin-bottom: auto;
+
+        &:last-child {
+            font-size: 1.1rem;
+        }
     }
 }
 

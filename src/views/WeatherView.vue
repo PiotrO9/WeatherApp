@@ -20,12 +20,9 @@
                     <span>Nie wybrano miast</span>
                 </div>
                 <div v-else>
-                    <CitiesList :selectedCities="selectedCitiesFullData" />
+                    <CitiesList :selectedCities="selectedCitiesStore.$state.SelectedCities" />
                 </div>
             </div>
-        </div>
-        <div>
-
         </div>
     </main>
     <aside>
@@ -39,19 +36,21 @@ import jsonData from '../assets/current.city.list.json'
 import type CityDatas from '../types/CityDatas'
 import CitiesList from '../components/CitiesList.vue'
 import { useRouter } from 'vue-router';
+import { useSelectedCities } from '../stores/selectedCities'
 
 export default defineComponent({
     components: {
         CitiesList
     },
     setup() {
+        const router = useRouter();
         const cityDatas = ref<CityDatas[]>([])
         const citiesToSelectOriginal = ref<string[]>([])
         const searchInput = ref("")
         const selectedCity = ref("")
         const selectedCities = ref<string[]>([])
         const selectedCitiesFullData = ref<CityDatas[]>([])
-        const router = useRouter();
+        const selectedCitiesStore = useSelectedCities();
 
         onMounted(() => {
             cityDatas.value = jsonData
@@ -73,11 +72,11 @@ export default defineComponent({
                 })
 
                 if (selectedCityFullData != undefined) {
-                    selectedCitiesFullData.value.push(selectedCityFullData)
+                    const selectedCitiesFromStore = selectedCitiesStore.getSelectedCities
+                    selectedCitiesFromStore.push(selectedCityFullData)
+                    selectedCitiesStore.setSelectedCities(selectedCitiesFromStore)
                 }
             }
-
-            console.log(selectedCities.value)
         };
 
         const citiesToSelect = computed(() => {
@@ -103,6 +102,7 @@ export default defineComponent({
             selectedCity,
             selectedCities,
             selectedCitiesFullData,
+            selectedCitiesStore,
             logout
         }
     }
@@ -119,7 +119,7 @@ main {
     align-items: center;
 
     nav {
-        width: 65%;
+        width: 75%;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -148,7 +148,7 @@ main {
     }
 
     .CitiesList {
-        width: 65%;
+        width: 75%;
         text-align: center;
 
         h1 {

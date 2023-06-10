@@ -1,4 +1,5 @@
 export type WeatherShortData = {
+  name: string;
   weather: string;
   description: string;
   temperature: number;
