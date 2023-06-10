@@ -17,7 +17,8 @@
             {{ currentWeatherDatas?.minTemperature }} °C -
             {{ currentWeatherDatas?.maxTemperature }} °C
         </p>
-        <button type="button" class="btn btn-outline-danger">X</button>
+        <button type="button" class="btn btn-outline-danger"
+            @click="removeCity(currentWeatherDatas ? currentWeatherDatas.name.toString() : '')">X</button>
         <button type="button" class="btn btn-success btn-more">Więcej</button>
     </li>
 </template>
@@ -27,6 +28,7 @@ import { defineComponent, onMounted, ref, computed } from 'vue'
 import type CityDatas from '../types/CityDatas';
 import GetCityActualWeather from '../utils/GetCityActualWeather'
 import type WeatherShortData from '../types/WeatherShortData'
+import { useSelectedCities } from '../stores/selectedCities'
 
 export default defineComponent({
     props: {
@@ -36,6 +38,7 @@ export default defineComponent({
         }
     },
     setup(props) {
+        const selectedCitiesStore = useSelectedCities();
         const currentWeatherDatas = ref<WeatherShortData | null>(null)
         const weatherIconUrl = computed(() => {
             if (currentWeatherDatas.value) {
@@ -50,9 +53,15 @@ export default defineComponent({
             currentWeatherDatas.value = await GetCityActualWeather.get(props.cityData.name)
         })
 
+        const removeCity = (cityName: string) => {
+            selectedCitiesStore.removeCity(cityName)
+            // console.log(selectedCitiesStore.getSelectedCities)
+        }
+
         return {
             currentWeatherDatas,
-            weatherIconUrl
+            weatherIconUrl,
+            removeCity
         }
     }
 }) 
