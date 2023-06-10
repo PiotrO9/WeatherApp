@@ -25,9 +25,7 @@
             </div>
         </div>
     </main>
-    <aside>
-
-    </aside>
+    <AppAside />
 </template>
 
 <script lang="ts">
@@ -38,10 +36,12 @@ import CitiesList from '../components/CitiesList.vue'
 import { useRouter } from 'vue-router';
 import { useSelectedCities } from '../stores/selectedCities'
 import { useLogin } from '../stores/loging'
+import AppAside from '../components/AppAside.vue'
 
 export default defineComponent({
     components: {
-        CitiesList
+        CitiesList,
+        AppAside
     },
     setup() {
         const router = useRouter();
