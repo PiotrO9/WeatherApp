@@ -14,6 +14,7 @@
 import { defineComponent, onMounted, ref } from 'vue';
 import { useAside } from '../stores/details'
 import Chart from 'chart.js/auto';
+import GetCityHistorialTemperature from '../utils/GetCityHistorialTemperature';
 
 export default defineComponent({
     props: {
