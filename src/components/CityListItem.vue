@@ -78,6 +78,8 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
+@import "../GeneralStyles/variables";
+
 li {
     width: 100%;
     display: grid;
@@ -90,6 +92,15 @@ li {
 
     p {
         font-size: 1.6rem;
+
+        @media (max-width: $MediumDesktop) {
+            font-size: 1.3rem;
+        }
+
+        @media (max-width: $SmallDesktop) {
+            font-size: 1.1rem;
+        }
+
     }
 
     button {
@@ -104,6 +115,17 @@ li {
         &.btn-more {
             width: 70%;
             text-align: center;
+
+            @media (max-width: $MediumDesktop) {
+                width: 85%;
+                font-size: 1rem;
+            }
+
+            @media (max-width: $SmallDesktop) {
+                width: 60%;
+                font-size: 0.75rem;
+                padding-left: 0.4rem;
+            }
         }
     }
 }

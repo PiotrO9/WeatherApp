@@ -130,6 +130,10 @@ export default defineComponent({
 <style scoped lang="scss">
 @import "../GeneralStyles/_variables.scss";
 
+* {
+    font-family: $PTSans;
+}
+
 main {
     @include SquareSize(100%);
     display: flex;
@@ -171,6 +175,14 @@ main {
         width: 75%;
         text-align: center;
 
+        @media (max-width: $SmallDesktop) {
+            width: 90%;
+        }
+
+        @media (max-width: $BigMobile) {
+            width: 100%;
+        }
+
         h1 {
             margin-top: 2rem;
         }
@@ -187,6 +199,7 @@ main {
 
             span {
                 font-size: 1.4rem;
+                font-family: $Sora;
             }
         }
     }

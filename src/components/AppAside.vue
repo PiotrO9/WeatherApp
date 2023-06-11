@@ -140,6 +140,7 @@ export default defineComponent({
             outline: none;
             border: none;
             font-weight: bold;
+            font-family: $Sora;
         }
 
         p {
@@ -150,9 +151,10 @@ export default defineComponent({
         }
 
         canvas {
-            font-size: 2rem;
+            max-height: 35%;
             margin-bottom: 3rem;
             background-color: $DarkBackgroundColor;
+            font-size: 2rem;
         }
     }
 }

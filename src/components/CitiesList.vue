@@ -39,6 +39,8 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
+@import "../GeneralStyles/variables";
+
 div {
     display: grid;
     grid-template-columns: 4fr repeat(4, 3fr) repeat(2, 2fr);
@@ -51,6 +53,10 @@ div {
 
         &:last-child {
             font-size: 1.1rem;
+        }
+
+        @media (max-width: $SmallDesktop) {
+            font-size: 1rem;
         }
     }
 }
