@@ -62,6 +62,7 @@ export default defineComponent({
 
         const showMoreDatas = (cityName: string) => {
             if (cityName != '') {
+                asideStateStore.setSelectedCountry(props.cityData.name)
                 asideStateStore.toggleAsideOpenState()
             }
         }

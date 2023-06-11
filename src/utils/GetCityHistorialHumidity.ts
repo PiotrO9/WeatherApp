@@ -3,7 +3,7 @@ import HistoricalHumidities from "../types/HistoricalHumidity";
 abstract class GetCityHistorialHumidity {
   static async get(cityName: string): Promise<HistoricalHumidities> {
     const apiResponse = await fetch(
-      `api.openweathermap.org/data/2.5/forecast?q=${cityName}&units=metric&appid=309e7667904c3b15d43d3bcdf1ce5f9e`
+      `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&units=metric&appid=309e7667904c3b15d43d3bcdf1ce5f9e`
     );
 
     const fullAPIData = await apiResponse.json();

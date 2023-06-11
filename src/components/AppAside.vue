@@ -15,59 +15,84 @@ import { defineComponent, onMounted, ref } from 'vue';
 import { useAside } from '../stores/details'
 import Chart from 'chart.js/auto';
 import GetCityHistorialTemperature from '../utils/GetCityHistorialTemperature';
+import GetCityHistorialHumidity from '../utils/GetCityHistorialHumidity';
 
 export default defineComponent({
-    props: {
-        countryName: {
-            type: String,
-            required: true
-        }
-    },
     setup() {
         const temperatureChartCanvas = ref<HTMLCanvasElement | null>(null);
         const humidityChartCanvas = ref<HTMLCanvasElement | null>(null);
         const asideStateStore = useAside()
 
-        onMounted(() => {
-            if (temperatureChartCanvas.value && humidityChartCanvas.value) {
+        onMounted(async () => {
+            if (temperatureChartCanvas.value) {
+                const response = await GetCityHistorialTemperature.get(asideStateStore.getSelectedCityName);
+                const upcomingTemperatureDatas = ref(response);
+
                 new Chart(temperatureChartCanvas.value.getContext('2d'), {
                     type: 'line',
                     data: {
-                        labels: ['Red', 'Blue'],
+                        labels: upcomingTemperatureDatas.value.datas,
                         datasets: [
                             {
-                                label: 'Test',
-                                data: [1, 2, 3],
+                                label: 'Temperatura',
+                                data: upcomingTemperatureDatas.value.temperatures,
                                 borderWidth: 1,
+                                backgroundColor: "white",
+                                borderColor: "white"
                             },
                         ],
                     },
                     options: {
                         scales: {
                             y: {
+                                ticks: {
+                                    color: "white"
+                                },
                                 beginAtZero: true,
+                                color: "white",
                             },
+                            x: {
+                                ticks: {
+                                    color: "white"
+                                }
+                            }
                         },
                     },
                 });
+            }
+
+            if (humidityChartCanvas.value) {
+                const response = await GetCityHistorialHumidity.get(asideStateStore.getSelectedCityName);
+                const UpcomingHumidityDatas = ref(response);
 
                 new Chart(humidityChartCanvas.value.getContext('2d'), {
                     type: 'line',
                     data: {
-                        labels: ['Red', 'Blue'],
+                        labels: UpcomingHumidityDatas.value.datas,
                         datasets: [
                             {
-                                label: 'Test',
-                                data: [1, 2, 3],
+                                label: 'Wilgotność',
+                                data: UpcomingHumidityDatas.value.humidities,
                                 borderWidth: 1,
+                                backgroundColor: "white",
+                                borderColor: "white"
                             },
                         ],
                     },
                     options: {
                         scales: {
                             y: {
+                                ticks: {
+                                    color: "white"
+                                },
                                 beginAtZero: true,
+                                color: "white",
                             },
+                            x: {
+                                ticks: {
+                                    color: "white"
+                                }
+                            }
                         },
                     },
                 });
@@ -98,7 +123,7 @@ export default defineComponent({
 
     aside {
         height: 100vh;
-        width: 30vw;
+        width: 50%;
         min-width: 300px;
         display: flex;
         flex-direction: column;
@@ -106,7 +131,7 @@ export default defineComponent({
         align-content: center;
         position: absolute;
         right: 0;
-        background-color: black;
+        background-color: $DarkBackgroundColor;
 
         button {
             position: absolute;
@@ -126,6 +151,8 @@ export default defineComponent({
 
         canvas {
             font-size: 2rem;
+            margin-bottom: 3rem;
+            background-color: $DarkBackgroundColor;
         }
     }
 }
