@@ -19,7 +19,8 @@
         </p>
         <button type="button" class="btn btn-outline-danger"
             @click="removeCity(currentWeatherDatas ? currentWeatherDatas.name.toString() : '')">X</button>
-        <button type="button" class="btn btn-success btn-more">Więcej</button>
+        <button type="button" class="btn btn-success btn-more"
+            @click="showMoreDatas(currentWeatherDatas ? currentWeatherDatas.name.toString() : '')">Więcej</button>
     </li>
 </template>
 
@@ -29,6 +30,7 @@ import type CityDatas from '../types/CityDatas';
 import GetCityActualWeather from '../utils/GetCityActualWeather'
 import type WeatherShortData from '../types/WeatherShortData'
 import { useSelectedCities } from '../stores/selectedCities'
+import { useAside } from '../stores/details'
 
 export default defineComponent({
     props: {
@@ -39,6 +41,7 @@ export default defineComponent({
     },
     setup(props) {
         const selectedCitiesStore = useSelectedCities();
+        const asideStateStore = useAside();
         const currentWeatherDatas = ref<WeatherShortData | null>(null)
         const weatherIconUrl = computed(() => {
             if (currentWeatherDatas.value) {
@@ -55,13 +58,19 @@ export default defineComponent({
 
         const removeCity = (cityName: string) => {
             selectedCitiesStore.removeCity(cityName)
-            // console.log(selectedCitiesStore.getSelectedCities)
+        }
+
+        const showMoreDatas = (cityName: string) => {
+            if (cityName != '') {
+                asideStateStore.toggleAsideOpenState()
+            }
         }
 
         return {
             currentWeatherDatas,
             weatherIconUrl,
-            removeCity
+            removeCity,
+            showMoreDatas
         }
     }
 }) 

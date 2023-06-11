@@ -25,7 +25,7 @@
             </div>
         </div>
     </main>
-    <AppAside />
+    <AppAside v-if="asideStateStore.getAsideOpenState" />
 </template>
 
 <script lang="ts">
@@ -36,6 +36,7 @@ import CitiesList from '../components/CitiesList.vue'
 import { useRouter } from 'vue-router';
 import { useSelectedCities } from '../stores/selectedCities'
 import { useLogin } from '../stores/loging'
+import { useAside } from '../stores/details'
 import AppAside from '../components/AppAside.vue'
 
 export default defineComponent({
@@ -53,6 +54,7 @@ export default defineComponent({
         const selectedCitiesFullData = ref<CityDatas[]>([])
         const selectedCitiesStore = useSelectedCities()
         const loginStore = useLogin()
+        const asideStateStore = useAside()
 
         onMounted(() => {
             cityDatas.value = jsonData
@@ -112,7 +114,8 @@ export default defineComponent({
             selectedCities,
             selectedCitiesFullData,
             selectedCitiesStore,
-            logout
+            logout,
+            asideStateStore
         }
     }
 })
