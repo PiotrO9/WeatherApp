@@ -1,9 +1,15 @@
 <template>
     <main>
-        <nav>
+        <nav class="navbar navbar-expand navbar-dark bg-dark">
+            <p class="navbar-brand mb-0 text-truncate">Aplikacja pogodowa</p>
+            <div class="ml-auto">
+                <button type="button" class="btn btn-info" @click="logout">Wyloguj</button>
+            </div>
+        </nav>
+        <div class="CountrySelection">
             <div>
                 <input type="text" class="form-control" v-model="searchInput" placeholder="Wyszukaj miasto" />
-                <button type="button" class="btn btn-info" @click="logout">Wyloguj</button>
+
             </div>
             <select v-if="citiesToSelect.length > 0" class="form-control" id="exampleFormControlSelect1"
                 v-model="selectedCity" @change="handleCitySelection">
@@ -12,7 +18,7 @@
                     {{ city }}
                 </option>
             </select>
-        </nav>
+        </div>
         <div class="CitiesList">
             <h1>Wybrane miasta</h1>
             <div class="CitiesList__selected">
@@ -129,33 +135,35 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: $TealBackgroundColor;
+    background-image: url("../../public/circles-background.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
 
     nav {
+        width: 100%;
+    }
+
+    .CountrySelection {
         width: 75%;
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin-top: 2rem;
+        margin-top: 4rem;
 
         div {
             width: 100%;
             display: flex;
             flex-direction: row;
-            gap: 2%;
 
             input {
-                width: 80%
+                width: 100%
             }
-
-            button {
-                width: 18%;
-            }
-
         }
 
         select {
             width: 100%;
-            margin-top: 0.5em;
         }
     }
 
@@ -171,15 +179,14 @@ main {
             height: max-content;
             min-height: 300px;
             margin-top: 2rem;
-            background-color: $CremeBackgroundColor;
             border-radius: 1rem;
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
+            background: linear-gradient(135deg, rgba(42, 157, 244, 0.1) rgba(42, 157, 244, 0));
+            border: 2px solid #003366;
 
-            &--empty {
-                height: 100%;
-
-                span {
-                    font-size: 1.4rem;
-                }
+            span {
+                font-size: 1.4rem;
             }
         }
     }
