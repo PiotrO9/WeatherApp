@@ -53,7 +53,13 @@ export default defineComponent({
         })
 
         onMounted(async () => {
+            const refreshInterval = 60 * 1000;
             currentWeatherDatas.value = await GetCityActualWeather.get(props.cityData.name)
+
+            setInterval(async () => {
+                currentWeatherDatas.value = await GetCityActualWeather.get(props.cityData.name)
+                console.log(currentWeatherDatas.value)
+            }, refreshInterval)
         })
 
         const removeCity = (cityName: string) => {

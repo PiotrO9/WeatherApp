@@ -71,7 +71,7 @@ export default defineComponent({
                         labels: UpcomingHumidityDatas.value.datas,
                         datasets: [
                             {
-                                label: 'Wilgotność',
+                                label: '% Wilgotnści',
                                 data: UpcomingHumidityDatas.value.humidities,
                                 borderWidth: 1,
                                 backgroundColor: "white",

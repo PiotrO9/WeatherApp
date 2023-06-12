@@ -24,7 +24,7 @@
                 <div v-if="selectedCitiesStore.$state.SelectedCities.length == 0" class="CitiesList__selected--empty">
                     <span>Nie wybrano miast</span>
                 </div>
-                <div v-else class="CitiesList__selected--list">
+                <div v-else tag="CitiesList" class="CitiesList__selected--list">
                     <CitiesList :selectedCities="selectedCitiesStore.$state.SelectedCities" />
                 </div>
             </div>
@@ -76,6 +76,11 @@ export default defineComponent({
 
         const handleCitySelection = () => {
             if (selectedCity.value) {
+                if (isValueExisting(selectedCity.value.slice(4))) {
+                    selectedCity.value = '';
+                    return;
+                }
+
                 selectedCities.value.push(selectedCity.value);
                 const trimmedCityName = selectedCity.value.slice(4);
                 selectedCity.value = '';
@@ -93,6 +98,17 @@ export default defineComponent({
                 }
             }
         };
+
+        const isValueExisting = (cityName: string): boolean => {
+            let resultArr: CityDatas[] = []
+            for (const city of selectedCitiesStore.getSelectedCities) {
+                if (city.name == cityName) {
+                    resultArr.push(city)
+                }
+            }
+
+            return (resultArr.length == 0) ? false : true;
+        }
 
         const citiesToSelect = computed(() => {
             const searchTerm = searchInput.value.toLowerCase();
@@ -168,6 +184,7 @@ main {
         select {
             width: 100%;
             max-height: 200px;
+            cursor: pointer;
         }
     }
 
@@ -196,6 +213,7 @@ main {
             -webkit-backdrop-filter: blur(3px);
             background: linear-gradient(135deg, rgba(42, 157, 244, 0.1) rgba(42, 157, 244, 0));
             border: 2px solid #003366;
+
 
             @media (max-width: $BigMobile) {
                 border-radius: 0px;
