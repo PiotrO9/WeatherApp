@@ -30,7 +30,7 @@ import type CityDatas from '../types/CityDatas';
 import GetCityActualWeather from '../utils/GetCityActualWeather'
 import type WeatherShortData from '../types/WeatherShortData'
 import { useSelectedCities } from '../stores/selectedCities'
-import { useAside } from '../stores/details'
+import { useAsideStore } from '../stores/details'
 
 export default defineComponent({
     props: {
@@ -41,7 +41,7 @@ export default defineComponent({
     },
     setup(props) {
         const selectedCitiesStore = useSelectedCities();
-        const asideStateStore = useAside();
+        const asideStateStore = useAsideStore();
         const currentWeatherDatas = ref<WeatherShortData | null>(null)
         const weatherIconUrl = computed(() => {
             if (currentWeatherDatas.value) {

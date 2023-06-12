@@ -12,7 +12,7 @@
   
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue';
-import { useAside } from '../stores/details'
+import { useAsideStore } from '../stores/details'
 import Chart from 'chart.js/auto';
 import GetCityHistorialTemperature from '../utils/GetCityHistorialTemperature';
 import GetCityHistorialHumidity from '../utils/GetCityHistorialHumidity';
@@ -21,7 +21,7 @@ export default defineComponent({
     setup() {
         const temperatureChartCanvas = ref<HTMLCanvasElement | null>(null);
         const humidityChartCanvas = ref<HTMLCanvasElement | null>(null);
-        const asideStateStore = useAside()
+        const asideStateStore = useAsideStore()
 
         onMounted(async () => {
             if (temperatureChartCanvas.value) {

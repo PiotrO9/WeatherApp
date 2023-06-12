@@ -1,15 +1,18 @@
 import { defineStore } from "pinia";
 
+interface LoginState {
+  rememberedState: boolean;
+  loggedState: boolean;
+}
+
 export const useLogin = defineStore("Logged", {
-  state: () => ({
+  state: (): LoginState => ({
     rememberedState: false,
     loggedState: false,
   }),
   getters: {
-    isRembered(): boolean {
-      this.rememberedState = localStorage.getItem("isRemembered")
-        ? true
-        : false;
+    isRemembered(): boolean {
+      this.rememberedState = !!localStorage.getItem("isRemembered");
       return this.rememberedState;
     },
     isLogged(): boolean {
@@ -17,11 +20,11 @@ export const useLogin = defineStore("Logged", {
     },
   },
   actions: {
-    rememberUser() {
+    setRememberUser() {
       localStorage.setItem("isRemembered", String(true));
       this.rememberedState = true;
     },
-    LoginUser() {
+    loginUser() {
       this.loggedState = true;
     },
     logoutUser() {

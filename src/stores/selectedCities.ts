@@ -2,8 +2,12 @@ import { defineStore } from "pinia";
 import CityDatas from "../types/CityDatas";
 import { transliterate } from "transliteration";
 
+interface SelectedCitiesState {
+  SelectedCities: CityDatas[];
+}
+
 export const useSelectedCities = defineStore("SelectedCities", {
-  state: () => ({
+  state: (): SelectedCitiesState => ({
     SelectedCities: [] as CityDatas[],
   }),
   getters: {
@@ -16,17 +20,13 @@ export const useSelectedCities = defineStore("SelectedCities", {
       this.SelectedCities = [...selectedCities];
     },
     removeCity(cityName: string) {
-      const transliteredCityName = transliterate(cityName);
+      const transliteratedCityName = transliterate(cityName);
 
-      console.log(this.$state.SelectedCities);
-      const index = this.$state.SelectedCities.findIndex(
-        (city) => city.name == transliteredCityName
+      this.setSelectedCities(
+        this.SelectedCities.filter(
+          (city) => city.name !== transliteratedCityName
+        )
       );
-      if (index !== -1) {
-        this.getSelectedCities.splice(index, 1);
-        this.setSelectedCities(this.getSelectedCities);
-      }
-      console.log(transliteredCityName);
     },
   },
 });

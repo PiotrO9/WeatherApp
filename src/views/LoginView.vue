@@ -51,9 +51,9 @@ export default defineComponent({
         const submitForm = (): void => {
             if (validateUser()) {
                 if (isRemembered.value) {
-                    loginStore.rememberUser();
+                    loginStore.setRememberUser();
                 }
-                loginStore.LoginUser();
+                loginStore.loginUser();
                 router.push({ name: "weather" });
             }
             else {

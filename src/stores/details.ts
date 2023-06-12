@@ -1,8 +1,13 @@
 import { defineStore } from "pinia";
 import { transliterate } from "transliteration";
 
-export const useAside = defineStore("AsideState", {
-  state: () => ({
+interface AsideState {
+  asideOpenState: boolean;
+  selectedCityName: string;
+}
+
+export const useAsideStore = defineStore("AsideState", {
+  state: (): AsideState => ({
     asideOpenState: false,
     selectedCityName: "",
   }),
