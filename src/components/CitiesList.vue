@@ -50,17 +50,17 @@ div {
     }
 
     span {
-        font-size: 1.2rem;
-        font-weight: bold;
         margin-top: 1rem;
         margin-bottom: auto;
+        font-size: 1.2rem;
+        font-weight: bold;
 
         &:last-child {
             font-size: 1.1rem;
 
             @media (max-width: $SmallDesktop) {
-                font-size: 0.9rem;
                 margin-right: 0.25rem;
+                font-size: 0.9rem;
             }
 
             @media (max-width: $MediumMobile) {

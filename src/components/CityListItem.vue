@@ -92,9 +92,9 @@ li {
     grid-template-columns: 4fr repeat(4, 3fr) repeat(2, 2fr);
     justify-items: center;
     align-items: center;
-    font-size: 2rem;
     margin-top: auto;
     margin-bottom: auto;
+    font-size: 2rem;
 
     @media (max-width: $SmallDesktop) {
         grid-template-columns: 3fr 2fr repeat(3, 3fr) repeat(2, 2fr);
@@ -119,7 +119,6 @@ li {
     button {
         width: 40%;
         min-width: 48px;
-
 
         &.btn-outline-danger {
             font-weight: bold;
@@ -153,8 +152,8 @@ li {
 
             @media (max-width: $SmallDesktop) {
                 width: 60%;
-                font-size: 0.75rem;
                 padding-left: 0.4rem;
+                font-size: 0.75rem;
             }
         }
     }

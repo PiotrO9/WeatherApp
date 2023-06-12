@@ -138,27 +138,27 @@ main {
             }
 
             >label {
+                width: 100%;
+                display: block;
                 position: absolute;
                 top: 0;
                 left: 0;
-                display: block;
-                width: 100%;
-                padding: 10px;
                 margin-bottom: 0;
+                padding: 10px;
                 line-height: 1.5;
-                color: #495057;
                 background-color: transparent;
-                pointer-events: none;
-                cursor: text;
+                color: #495057;
                 border: 1px solid transparent;
                 border-radius: .25rem;
+                pointer-events: none;
+                cursor: text;
                 transition: all .1s ease-in-out;
             }
 
             >input,
             >label {
-                padding: 10px;
                 height: auto;
+                padding: 10px;
                 border-radius: 4px;
             }
         }

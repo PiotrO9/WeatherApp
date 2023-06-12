@@ -122,13 +122,11 @@ export default defineComponent({
     position: absolute;
 
     aside {
+        @include FlexCenter;
         height: 100vh;
         width: 50%;
         min-width: 300px;
-        display: flex;
         flex-direction: column;
-        justify-content: center;
-        align-content: center;
         position: absolute;
         right: 0;
         background-color: $DarkBackgroundColor;
@@ -152,10 +150,10 @@ export default defineComponent({
         }
 
         p {
-            color: white;
-            text-align: center;
-            font-size: 2rem;
             margin-bottom: 1rem;
+            font-size: 2rem;
+            text-align: center;
+            color: white;
         }
 
         canvas {

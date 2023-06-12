@@ -216,9 +216,9 @@ main {
 
 
             @media (max-width: $BigMobile) {
+                padding-right: 4px;
                 border-radius: 0px;
                 border-width: 3px;
-                padding-right: 4px;
             }
 
             span {
