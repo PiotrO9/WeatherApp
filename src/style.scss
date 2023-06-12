@@ -8,6 +8,7 @@
 
 html, body, #app {
     @include SquareSize(100%);
+    background-color: $TealBackgroundColor; 
 }
 
 #app {

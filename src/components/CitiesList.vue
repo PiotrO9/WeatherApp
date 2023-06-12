@@ -45,6 +45,10 @@ div {
     display: grid;
     grid-template-columns: 4fr repeat(4, 3fr) repeat(2, 2fr);
 
+    @media (max-width: $SmallDesktop) {
+        grid-template-columns: 3fr 2fr repeat(3, 3fr) repeat(2, 2fr);
+    }
+
     span {
         font-size: 1.2rem;
         font-weight: bold;
@@ -53,10 +57,31 @@ div {
 
         &:last-child {
             font-size: 1.1rem;
+
+            @media (max-width: $SmallDesktop) {
+                font-size: 0.9rem;
+                margin-right: 0.25rem;
+            }
+
+            @media (max-width: $MediumMobile) {
+                font-size: 0.75rem;
+            }
+
+            @media (max-width: $SmallMobile) {
+                font-size: 0.65rem;
+            }
         }
 
         @media (max-width: $SmallDesktop) {
             font-size: 1rem;
+        }
+
+        @media (max-width: $MediumMobile) {
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: $SmallMobile) {
+            font-size: 0.65rem;
         }
     }
 }

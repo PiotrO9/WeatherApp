@@ -133,6 +133,14 @@ export default defineComponent({
         right: 0;
         background-color: $DarkBackgroundColor;
 
+        @media (max-width: $SmallDesktop) {
+            width: 75%;
+        }
+
+        @media (max-width: $BigMobile) {
+            width: 100%;
+        }
+
         button {
             position: absolute;
             top: 10px;

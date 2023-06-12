@@ -90,6 +90,10 @@ li {
     margin-top: auto;
     margin-bottom: auto;
 
+    @media (max-width: $SmallDesktop) {
+        grid-template-columns: 3fr 2fr repeat(3, 3fr) repeat(2, 2fr);
+    }
+
     p {
         font-size: 1.6rem;
 
@@ -101,15 +105,35 @@ li {
             font-size: 1.1rem;
         }
 
+        @media (max-width: $MediumMobile) {
+            font-size: 0.9rem;
+        }
     }
 
     button {
         width: 40%;
         min-width: 48px;
-        text-align: center;
+
 
         &.btn-outline-danger {
             font-weight: bold;
+
+            @media (max-width: $MediumDesktop) {
+                width: 60%;
+                min-width: 0px;
+            }
+
+            @media (max-width: $MediumMobile) {
+                width: 80%;
+                max-width: 26px;
+                max-height: 26px;
+                padding-top: 0px;
+                padding-left: 8px;
+            }
+
+            @media (max-width: $SmallMobile) {
+                width: 100%;
+            }
         }
 
         &.btn-more {

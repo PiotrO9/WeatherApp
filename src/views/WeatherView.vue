@@ -9,7 +9,6 @@
         <div class="CountrySelection">
             <div>
                 <input type="text" class="form-control" v-model="searchInput" placeholder="Wyszukaj miasto" />
-
             </div>
             <select v-if="citiesToSelect.length > 0" class="form-control" id="exampleFormControlSelect1"
                 v-model="selectedCity" @change="handleCitySelection">
@@ -168,6 +167,7 @@ main {
 
         select {
             width: 100%;
+            max-height: 200px;
         }
     }
 
@@ -197,8 +197,14 @@ main {
             background: linear-gradient(135deg, rgba(42, 157, 244, 0.1) rgba(42, 157, 244, 0));
             border: 2px solid #003366;
 
+            @media (max-width: $BigMobile) {
+                border-radius: 0px;
+                border-width: 3px;
+                padding-right: 4px;
+            }
+
             span {
-                font-size: 1.4rem;
+                font-size: 1.6rem;
                 font-family: $Sora;
             }
         }
