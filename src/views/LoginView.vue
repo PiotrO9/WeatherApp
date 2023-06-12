@@ -28,7 +28,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted } from 'vue'
+import { defineComponent, ref, onMounted, toRefs } from 'vue'
 import { useRouter } from 'vue-router';
 import jsonData from '../assets/user.login.datas.json'
 import UserLoginDatas from '../types/UserLoginDatas'
@@ -36,13 +36,17 @@ import { useLogin } from '../stores/loging'
 
 export default defineComponent({
     setup() {
-        const isRemembered = ref(false);
-        const isLoginError = ref(false);
-        const emailInput = ref("");
-        const passwordInput = ref("");
-        const registeredUsers = ref<UserLoginDatas[]>([]);
+        const data = {
+            isRemembered: ref(false),
+            isLoginError: ref(false),
+            emailInput: ref(''),
+            passwordInput: ref(''),
+            registeredUsers: ref<UserLoginDatas[]>([]),
+        };
+
         const router = useRouter();
         const loginStore = useLogin();
+        const { isRemembered, isLoginError, emailInput, passwordInput, registeredUsers } = toRefs(data);
 
         onMounted(() => {
             registeredUsers.value = jsonData
@@ -62,23 +66,16 @@ export default defineComponent({
         };
 
         const validateUser = (): boolean => {
-            for (const userData of registeredUsers.value) {
-                if (userData.email === emailInput.value && userData.password === passwordInput.value) {
-                    return true;
-                }
-            }
-
-            return false
-        }
+            return registeredUsers.value.some((userData) => {
+                return userData.email === emailInput.value && userData.password === passwordInput.value;
+            });
+        };
 
         return {
-            isRemembered,
-            isLoginError,
-            emailInput,
-            passwordInput,
+            ...data,
             submitForm,
-            validateUser
-        }
+            validateUser,
+        };
     }
 })
 </script>

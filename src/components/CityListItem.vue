@@ -58,7 +58,6 @@ export default defineComponent({
 
             setInterval(async () => {
                 currentWeatherDatas.value = await GetCityActualWeather.get(props.cityData.name)
-                console.log(currentWeatherDatas.value)
             }, refreshInterval)
         })
 

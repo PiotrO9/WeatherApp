@@ -28,12 +28,6 @@ export default defineComponent({
     },
     components: {
         CityListItem
-    },
-    setup() {
-
-    },
-    created() {
-        console.log(this.$props.selectedCities)
     }
 }) 
 </script>

@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted, computed } from 'vue'
+import { defineComponent, ref, toRefs, onMounted, computed } from 'vue'
 import jsonData from '../assets/current.city.list.json'
 import type CityDatas from '../types/CityDatas'
 import CitiesList from '../components/CitiesList.vue'
@@ -51,15 +51,20 @@ export default defineComponent({
     },
     setup() {
         const router = useRouter();
-        const cityDatas = ref<CityDatas[]>([])
-        const citiesToSelectOriginal = ref<string[]>([])
-        const searchInput = ref("")
-        const selectedCity = ref("")
-        const selectedCities = ref<string[]>([])
-        const selectedCitiesFullData = ref<CityDatas[]>([])
         const selectedCitiesStore = useSelectedCities()
         const loginStore = useLogin()
         const asideStateStore = useAsideStore()
+
+        const data = {
+            cityDatas: ref<CityDatas[]>([]),
+            citiesToSelectOriginal: ref<string[]>([]),
+            searchInput: ref(""),
+            selectedCity: ref(""),
+            selectedCities: ref<string[]>([]),
+            selectedCitiesFullData: ref<CityDatas[]>([])
+        }
+
+        const { cityDatas, citiesToSelectOriginal, searchInput, selectedCity, selectedCities, selectedCitiesFullData } = toRefs(data)
 
         onMounted(() => {
             cityDatas.value = jsonData
@@ -68,7 +73,7 @@ export default defineComponent({
             })
 
             if (!loginStore.isLogged) {
-                if (!loginStore.isRembered) {
+                if (!loginStore.isRemembered) {
                     router.push({ name: "home" })
                 }
             }
@@ -91,7 +96,7 @@ export default defineComponent({
                     }
                 })
 
-                if (selectedCityFullData != undefined) {
+                if (selectedCityFullData) {
                     const selectedCitiesFromStore = selectedCitiesStore.getSelectedCities
                     selectedCitiesFromStore.push(selectedCityFullData)
                     selectedCitiesStore.setSelectedCities(selectedCitiesFromStore)
@@ -128,15 +133,12 @@ export default defineComponent({
         }
 
         return {
+            ...data,
             citiesToSelect,
-            searchInput,
-            handleCitySelection,
-            selectedCity,
-            selectedCities,
-            selectedCitiesFullData,
             selectedCitiesStore,
+            asideStateStore,
+            handleCitySelection,
             logout,
-            asideStateStore
         }
     }
 })
