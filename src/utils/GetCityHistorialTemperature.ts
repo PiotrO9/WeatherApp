@@ -1,9 +1,10 @@
 import HistoricalTemperatures from "../types/HistoricalTemperature";
+import { API_KEY_WEATHER } from "../apikeys";
 
 abstract class GetCityHistorialTemperature {
   static async get(cityName: string): Promise<HistoricalTemperatures> {
     const apiResponse = await fetch(
-      `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&units=metric&appid=309e7667904c3b15d43d3bcdf1ce5f9e`
+      `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&units=metric&appid=${API_KEY_WEATHER}`
     );
 
     const fullAPIData = await apiResponse.json();
