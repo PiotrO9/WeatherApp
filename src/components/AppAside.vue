@@ -13,7 +13,7 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue';
 import { useAsideStore } from '../stores/details'
-import Chart from 'chart.js/auto';
+import Chart, { ChartItem } from 'chart.js/auto';
 import GetCityHistorialTemperature from '../utils/GetCityHistorialTemperature';
 import GetCityHistorialHumidity from '../utils/GetCityHistorialHumidity';
 
@@ -28,7 +28,7 @@ export default defineComponent({
                 const response = await GetCityHistorialTemperature.get(asideStateStore.getSelectedCityName);
                 const upcomingTemperatureDatas = ref(response);
 
-                new Chart(temperatureChartCanvas.value.getContext('2d'), {
+                new Chart(temperatureChartCanvas.value.getContext('2d') as ChartItem, {
                     type: 'line',
                     data: {
                         labels: upcomingTemperatureDatas.value.datas,
@@ -49,7 +49,6 @@ export default defineComponent({
                                     color: "white"
                                 },
                                 beginAtZero: true,
-                                color: "white",
                             },
                             x: {
                                 ticks: {
@@ -65,7 +64,7 @@ export default defineComponent({
                 const response = await GetCityHistorialHumidity.get(asideStateStore.getSelectedCityName);
                 const UpcomingHumidityDatas = ref(response);
 
-                new Chart(humidityChartCanvas.value.getContext('2d'), {
+                new Chart(humidityChartCanvas.value.getContext('2d') as ChartItem, {
                     type: 'line',
                     data: {
                         labels: UpcomingHumidityDatas.value.datas,
@@ -86,7 +85,6 @@ export default defineComponent({
                                     color: "white"
                                 },
                                 beginAtZero: true,
-                                color: "white",
                             },
                             x: {
                                 ticks: {

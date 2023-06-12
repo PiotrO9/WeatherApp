@@ -64,7 +64,7 @@ export default defineComponent({
             selectedCitiesFullData: ref<CityDatas[]>([])
         }
 
-        const { cityDatas, citiesToSelectOriginal, searchInput, selectedCity, selectedCities, selectedCitiesFullData } = toRefs(data)
+        const { cityDatas, citiesToSelectOriginal, searchInput, selectedCity, selectedCities } = toRefs(data)
 
         onMounted(() => {
             cityDatas.value = jsonData
